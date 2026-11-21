@@ -1,0 +1,49 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "omniflow-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-02-14",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Cloudflare D1 Database Binding
+  // In local development, Wrangler creates and manages a local SQLite file automatically.
+  // When deploying to production, replace `database_id` with your client database ID from:
+  // wrangler d1 create omniflow-db
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "omniflow-db",
+      "database_id": "PLACEHOLDER_D1_DATABASE_ID_REPLACE_ON_DEPLOY",
+      "migrations_dir": "../../migrations"
+    }
+  ],
+
+  // Static Assets Binding (Cloudflare Workers with Static Assets)
+  // Connects the compiled frontend SPA bundle to the Worker edge router.
+  // Official doc: https://developers.cloudflare.com/workers/static-assets/routing/
+  // run_worker_first ensures /api/* and /health routes always execute the Worker script first.
+  "assets": {
+    "directory": "../web/dist",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": true
+  },
+
+  // Environment Variables (Non-sensitive)
+  "vars": {
+    "ENVIRONMENT": "development",
+    "APP_NAME": "OmniFlow",
+    "APP_VERSION": "0.1.0"
+  },
+
+  // Observability
+  "observability": {
+    "enabled": true
+  },
+
+  // Scheduled Triggers (Daily Webhook Events Purge at 03:00 UTC)
+  "triggers": {
+    "crons": ["0 3 * * *"]
+  }
+}
