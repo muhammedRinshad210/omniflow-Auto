@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "omniflow-api",
+  "name": "omniflow-auto",
   "main": "src/index.ts",
   "compatibility_date": "2025-02-14",
   "compatibility_flags": ["nodejs_compat"],
@@ -13,7 +13,7 @@
     {
       "binding": "DB",
       "database_name": "omniflow-db",
-      "database_id": "PLACEHOLDER_D1_DATABASE_ID_REPLACE_ON_DEPLOY",
+      "database_id": "ca98f30e-7c56-4f1f-af73-8d41175064df",
       "migrations_dir": "../../migrations"
     }
   ],
